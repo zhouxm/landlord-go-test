@@ -2,8 +2,8 @@ package game
 
 import (
 	"landlord/program/model"
-	"github.com/wqtapp/poker"
-	"github.com/wqtapp/pokergame"
+	"landlord/program/poker"
+	"landlord/program/pokergame"
 )
 
 type IPlayer interface {

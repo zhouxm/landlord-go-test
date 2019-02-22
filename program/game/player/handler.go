@@ -2,11 +2,11 @@ package player
 
 import (
 	"fmt"
-	"runtime/debug"
 	"github.com/gorilla/websocket"
-	"sync"
 	"github.com/sirupsen/logrus"
+	"runtime/debug"
 	"strconv"
+	"sync"
 )
 
 func HandlerUserMsg(wg *sync.WaitGroup,con *websocket.Conn,currPlayer *Player) {

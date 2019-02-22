@@ -1,8 +1,8 @@
 package game
 
-import "github.com/wqtapp/pokergame"
+import "landlord/program/pokergame"
 
-func IsDoudizhuTypeBiger(type1 int,type2 int) bool{
+func IsDoudizhuTypeBiger(type1 int, type2 int) bool {
 	if type1 == pokergame.LANDLORD_SET_TYPE_JOKER_BOMB && type2 != pokergame.LANDLORD_SET_TYPE_JOKER_BOMB {
 		return true
 	}

@@ -1,22 +1,22 @@
 package games
 
 import (
-	"landlord/program/game/games/doudizhu"
 	"landlord/program/game"
+	"landlord/program/game/games/doudizhu"
 )
 
 /**
 *该包用于解决game和doudizhu包循环依赖问题
  */
-func NewGame(gameID int,baseScore int) game.IGame {
+func NewGame(gameID int, baseScore int) game.IGame {
 	switch gameID {
-	case game.GAME_TYPE_OF_DOUDOZHU:
+	case game.TypeOfDoudozhu:
 		return doudizhu.GetDoudizhu(baseScore)
-	case game.GAME_TYPE_OF_SHENGJI:
+	case game.TypeOfShengji:
 		return nil
-	case game.GAME_TYPE_OF_BAOHUANG:
+	case game.TypeOfBaohuang:
 		return nil
-	case game.GAME_TYPE_OF_ZHAJINHUA:
+	case game.TypeOfZhajinhua:
 		return nil
 	default:
 		return nil

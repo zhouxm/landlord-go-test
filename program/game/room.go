@@ -1,10 +1,10 @@
 package game
 
 import (
-	"sync"
 	"errors"
 	"github.com/sirupsen/logrus"
 	"strconv"
+	"sync"
 )
 
 type GameList struct {

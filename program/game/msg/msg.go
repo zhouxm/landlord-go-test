@@ -2,8 +2,8 @@ package msg
 
 import (
 	"encoding/json"
+	"landlord/program/poker"
 	"strconv"
-	"github.com/wqtapp/poker"
 )
 
 const(
