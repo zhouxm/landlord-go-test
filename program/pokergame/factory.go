@@ -25,56 +25,55 @@ type IAnalyzer interface {
 	RemovePokerSet(pokers poker.PokerSet)
 	GetMinPlayableCards() poker.PokerSet
 	GetUseableCards(setType *SetInfo) []poker.PokerSet
-
 }
 
 type ISetChecker interface {
-	GetSetInfo(set poker.PokerSet) (*SetInfo,error)
+	GetSetInfo(set poker.PokerSet) (*SetInfo, error)
 }
 
 //获取适用于某一种游戏的扑克集
-func NewSetChecker(gameType int) ISetChecker{
+func NewSetChecker(gameType int) ISetChecker {
 	switch gameType {
-		case GAME_OF_LANDLORD:
-			landLordChecker := landLordChecker{}
-			return &landLordChecker
-		case GAME_OF_ROYALIST:
-		case GAME_OF_SHENGJI:
-		case GAME_OF_ZHAJINHUA:
-		default:
-			return nil
+	case GAME_OF_LANDLORD:
+		landLordChecker := landLordChecker{}
+		return &landLordChecker
+	case GAME_OF_ROYALIST:
+	case GAME_OF_SHENGJI:
+	case GAME_OF_ZHAJINHUA:
+	default:
+		return nil
 	}
 	return nil
 }
+
 //获取适用于某一种游戏的扑克分析器
-func NewAnalyzer(gameType int) IAnalyzer{
+func NewAnalyzer(gameType int) IAnalyzer {
 	switch gameType {
-		case GAME_OF_LANDLORD:
-			analyzer := landLordAnalyzer{}
-			analyzer.InitAnalyzer()
-			return &analyzer
-		case GAME_OF_ROYALIST:
-		case GAME_OF_SHENGJI:
-		case GAME_OF_ZHAJINHUA:
-		default:
-			return nil
+	case GAME_OF_LANDLORD:
+		analyzer := landLordAnalyzer{}
+		analyzer.InitAnalyzer()
+		return &analyzer
+	case GAME_OF_ROYALIST:
+	case GAME_OF_SHENGJI:
+	case GAME_OF_ZHAJINHUA:
+	default:
+		return nil
 	}
 	return nil
 }
+
 //获取适用于某一种游戏的扑克记录器
-func NewRecorder(gameType int) IRecorder{
+func NewRecorder(gameType int) IRecorder {
 	switch gameType {
-		case GAME_OF_LANDLORD:
-			recorder := cardNameRecorder{}
-			recorder.InitRecorder()
-			return &recorder
-		case GAME_OF_ROYALIST:
-		case GAME_OF_SHENGJI:
-		case GAME_OF_ZHAJINHUA:
-		default:
-			return nil
+	case GAME_OF_LANDLORD:
+		recorder := cardNameRecorder{}
+		recorder.InitRecorder()
+		return &recorder
+	case GAME_OF_ROYALIST:
+	case GAME_OF_SHENGJI:
+	case GAME_OF_ZHAJINHUA:
+	default:
+		return nil
 	}
 	return nil
 }
-
-

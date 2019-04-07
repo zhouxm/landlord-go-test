@@ -8,6 +8,6 @@ type User struct {
 	Phone        string `gorm:"column:phone;type:char(11);unique;index:phone;not null"`
 	RegisterTime string `gorm:"column:register_time;type:datetime;not null"`
 	Level        int    `gorm:"column:level;type:smallint;not null;default:1"`
-	Score int 			`gorm:"column:score;not null;default:1"`
-	GameCard int `gorm:column:game_card;not null;default:10`
+	Score        int    `gorm:"column:score;not null;default:1"`
+	GameCard     int    `gorm:column:game_card;not null;default:10`
 }

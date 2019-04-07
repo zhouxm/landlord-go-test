@@ -6,21 +6,24 @@ type PokerDeck struct {
 }
 
 //获取指定索引的扑克牌
-func (deck PokerDeck) GetCard(index int) *PokerCard{
+func (deck PokerDeck) GetCard(index int) *PokerCard {
 	return &deck.cards[index]
 }
+
 //计算扑克牌的数量
-func (deck PokerDeck) CountCards() int{
+func (deck PokerDeck) CountCards() int {
 	return len(deck.cards)
 }
+
 //获取该deck中的所有牌
-func (deck PokerDeck) GetAllCards() []PokerCard{
+func (deck PokerDeck) GetAllCards() []PokerCard {
 	return deck.cards[:]
 }
+
 //将pokerdeck转换为pokerset
-func (deck PokerDeck) ToPokerSet() PokerSet{
+func (deck PokerDeck) ToPokerSet() PokerSet {
 	set := NewPokerSet()
-	for i,_ := range deck.cards{
+	for i, _ := range deck.cards {
 		set = set.AddPokers(PokerSet{&deck.cards[i]})
 	}
 	return set
@@ -29,18 +32,18 @@ func (deck PokerDeck) ToPokerSet() PokerSet{
 //原始的一副扑克牌
 var originDeck PokerDeck
 
-func init(){
+func init() {
 	originDeck = createOriginDeck()
 }
 
 //创建原始扑克牌，后续只需要复制即可，不用再运算获得
-func createOriginDeck() PokerDeck{
+func createOriginDeck() PokerDeck {
 	deck := PokerDeck{}
-	for i := 0;i<52;i++ {
-		shang := i/4;
-		yu := i%4;
+	for i := 0; i < 52; i++ {
+		shang := i / 4
+		yu := i % 4
 		suit := ""
-		switch(yu){
+		switch yu {
 		case 0:
 			suit = CARD_SUIT_CLUB
 		case 1:
@@ -52,7 +55,7 @@ func createOriginDeck() PokerDeck{
 		}
 		pokerValue := 0
 		pokerName := ""
-		switch(shang){
+		switch shang {
 		case 0:
 			pokerValue = CARD_VALUE_THREE
 			pokerName = CARD_SYMBOL_THREE
@@ -114,14 +117,15 @@ func createOriginDeck() PokerDeck{
 }
 
 //每个游戏桌子都有单独的扑克牌，防止洗牌等操作冲突
-func CreateDeck() PokerDeck{
+func CreateDeck() PokerDeck {
 	copyDeck := originDeck
 	return copyDeck
 }
+
 //根据输入的扑克副数，生成扑克集
-func CreatePokerSetWithDeckNum(deckNum int) PokerSet{
+func CreatePokerSetWithDeckNum(deckNum int) PokerSet {
 	set := NewPokerSet()
-	for i:=0;i<deckNum;i++{
+	for i := 0; i < deckNum; i++ {
 		set = set.AddPokers(CreateDeck().ToPokerSet())
 	}
 	return set

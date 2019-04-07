@@ -1,27 +1,27 @@
 package pokergame
 
-const(
-	LANDLORD_SET_TYPE_SINGLE  = iota //"单牌"
-	LANDLORD_SET_TYPE_DRAGON         //"单顺子(5个及以上)"
+const (
+	LANDLORD_SET_TYPE_SINGLE = iota //"单牌"
+	LANDLORD_SET_TYPE_DRAGON        //"单顺子(5个及以上)"
 
-	LANDLORD_SET_TYPE_PAIR         //"对牌"
-	LANDLORD_SET_TYPE_MULIT_PAIRS  //"双顺子(3个及以上)"
+	LANDLORD_SET_TYPE_PAIR        //"对牌"
+	LANDLORD_SET_TYPE_MULIT_PAIRS //"双顺子(3个及以上)"
 
-	LANDLORD_SET_TYPE_THREE                  //三张不带牌
-	LANDLORD_SET_TYPE_THREE_PLUS_ONE         //三带一
-	LANDLORD_SET_TYPE_THREE_PLUS_TWO         //三带二
-	LANDLORD_SET_TYPE_MULITY_THREE           //3顺子不带牌
-	LANDLORD_SET_TYPE_MULITY_THREE_PLUS_ONE  //3顺子带1个牌
-	LANDLORD_SET_TYPE_MULITY_THREE_PLUS_TWO  //3顺子带2个牌
+	LANDLORD_SET_TYPE_THREE                 //三张不带牌
+	LANDLORD_SET_TYPE_THREE_PLUS_ONE        //三带一
+	LANDLORD_SET_TYPE_THREE_PLUS_TWO        //三带二
+	LANDLORD_SET_TYPE_MULITY_THREE          //3顺子不带牌
+	LANDLORD_SET_TYPE_MULITY_THREE_PLUS_ONE //3顺子带1个牌
+	LANDLORD_SET_TYPE_MULITY_THREE_PLUS_TWO //3顺子带2个牌
 
-	LANDLORD_SET_TYPE_FOUR_PLUS_TWO          //四带2张
-	LANDLORD_SET_TYPE_FOUR_PLUS_FOUR         //四带2对
-	LANDLORD_SET_TYPE_MULITY_FOUR            //四顺子不带牌
-	LANDLORD_SET_TYPE_MULITY_FOUR_PLUS_TWO   //四顺子带2张
-	LANDLORD_SET_TYPE_MULITY_FOUR_PLUS_FOUR  //四顺子带4张
+	LANDLORD_SET_TYPE_FOUR_PLUS_TWO         //四带2张
+	LANDLORD_SET_TYPE_FOUR_PLUS_FOUR        //四带2对
+	LANDLORD_SET_TYPE_MULITY_FOUR           //四顺子不带牌
+	LANDLORD_SET_TYPE_MULITY_FOUR_PLUS_TWO  //四顺子带2张
+	LANDLORD_SET_TYPE_MULITY_FOUR_PLUS_FOUR //四顺子带4张
 
-	LANDLORD_SET_TYPE_COMMON_BOMB  // "炸弹"
-	LANDLORD_SET_TYPE_JOKER_BOMB   // "王炸"
+	LANDLORD_SET_TYPE_COMMON_BOMB // "炸弹"
+	LANDLORD_SET_TYPE_JOKER_BOMB  // "王炸"
 )
 
 func GetPokerSetTypeName(pattern int) string {
@@ -65,12 +65,12 @@ func GetPokerSetTypeName(pattern int) string {
 	}
 }
 
-type SetInfo struct{
+type SetInfo struct {
 	setType            int
 	cardValueMinAndMax map[string]int
 }
 
-func NewSetInfo(setType int,minValue int,maxValue int) *SetInfo {
+func NewSetInfo(setType int, minValue int, maxValue int) *SetInfo {
 	setInfo := SetInfo{
 		setType:            setType,
 		cardValueMinAndMax: make(map[string]int),
@@ -80,18 +80,18 @@ func NewSetInfo(setType int,minValue int,maxValue int) *SetInfo {
 	return &setInfo
 }
 
-func (setInfo *SetInfo)GetRangeWidth() int{
-	return setInfo.cardValueMinAndMax["max"] - setInfo.cardValueMinAndMax["min"]+1
+func (setInfo *SetInfo) GetRangeWidth() int {
+	return setInfo.cardValueMinAndMax["max"] - setInfo.cardValueMinAndMax["min"] + 1
 }
-func (setInfo *SetInfo)GetSetType() int{
+func (setInfo *SetInfo) GetSetType() int {
 	return setInfo.setType
 }
-func (setInfo *SetInfo)GetSetTypeName() string{
+func (setInfo *SetInfo) GetSetTypeName() string {
 	return GetPokerSetTypeName(setInfo.setType)
 }
-func (setInfo *SetInfo)GetMinValue() int{
+func (setInfo *SetInfo) GetMinValue() int {
 	return setInfo.cardValueMinAndMax["min"]
 }
-func (setInfo *SetInfo)GetMaxValue() int{
+func (setInfo *SetInfo) GetMaxValue() int {
 	return setInfo.cardValueMinAndMax["max"]
 }

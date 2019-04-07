@@ -1,7 +1,7 @@
 package poker
 
 /**
-	定义扑克牌花色、显示牌型、值以及扑克牌
+定义扑克牌花色、显示牌型、值以及扑克牌
 */
 //定义扑克牌值
 const (
@@ -21,55 +21,53 @@ const (
 	CARD_VALUE_BLACK_JOKER
 	CARD_VALUE_RED_JOKER
 )
+
 //定义扑克牌符号
 const (
-	CARD_SYMBOL_THREE= "3"
-	CARD_SYMBOL_FOUR = "4"
-	CARD_SYMBOL_FIVE = "5"
-	CARD_SYMBOL_SIX = "6"
-	CARD_SYMBOL_SEVEN = "7"
-	CARD_SYMBOL_EIGHT = "8"
-	CARD_SYMBOL_NINE = "9"
-	CARD_SYMBOL_TEN = "10"
-	CARD_SYMBOL_JACK = "J"
-	CARD_SYMBOL_QUEEN = "Q"
-	CARD_SYMBOL_KING = "K"
-	CARD_SYMBOL_ACE = "A"
-	CARD_SYMBOL_TWO = "2"
+	CARD_SYMBOL_THREE       = "3"
+	CARD_SYMBOL_FOUR        = "4"
+	CARD_SYMBOL_FIVE        = "5"
+	CARD_SYMBOL_SIX         = "6"
+	CARD_SYMBOL_SEVEN       = "7"
+	CARD_SYMBOL_EIGHT       = "8"
+	CARD_SYMBOL_NINE        = "9"
+	CARD_SYMBOL_TEN         = "10"
+	CARD_SYMBOL_JACK        = "J"
+	CARD_SYMBOL_QUEEN       = "Q"
+	CARD_SYMBOL_KING        = "K"
+	CARD_SYMBOL_ACE         = "A"
+	CARD_SYMBOL_TWO         = "2"
 	CARD_SYMBOL_BLACK_JOKER = "BlackJoker"
-	CARD_SYMBOL_RED_JOKER = "RedJoker"
+	CARD_SYMBOL_RED_JOKER   = "RedJoker"
 )
+
 //定义扑克牌花色
-const(
+const (
 	CARD_SUIT_DIAMOND = "Diamond" //方片
 	CARD_SUIT_HEART   = "Heart"   //红桃
 	CARD_SUIT_SPADE   = "Spade"   //黑桃
 	CARD_SUIT_CLUB    = "Club"    //梅花
 	CARD_SUIT_JOKER   = "Joker"   //大小王无花色
 )
+
 //定义扑克牌
 type PokerCard struct {
 	CardValue int    //card值用于排序比较
 	CardSuit  string //card花色
 	CardName  string //card显示的字符
 }
+
 //获取扑克牌的值
-func (card PokerCard)GetValue() int{
+func (card PokerCard) GetValue() int {
 	return card.CardValue
 }
+
 //获取扑克牌的花色
-func (card PokerCard)GetSuit() string{
+func (card PokerCard) GetSuit() string {
 	return card.CardSuit
 }
+
 //获取扑克牌的名字
-func (card PokerCard)GetCardName() string{
+func (card PokerCard) GetCardName() string {
 	return card.CardName
 }
-
-
-
-
-
-
-
-
