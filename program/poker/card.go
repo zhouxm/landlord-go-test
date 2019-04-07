@@ -37,8 +37,8 @@ const (
 	CARD_SYMBOL_KING        = "K"
 	CARD_SYMBOL_ACE         = "A"
 	CARD_SYMBOL_TWO         = "2"
-	CARD_SYMBOL_BLACK_JOKER = "BlackJoker"
-	CARD_SYMBOL_RED_JOKER   = "RedJoker"
+	CARD_SYMBOL_BLACK_JOKER = "Black Joker"
+	CARD_SYMBOL_RED_JOKER   = "Red Joker"
 )
 
 //定义扑克牌花色

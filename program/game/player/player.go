@@ -346,7 +346,7 @@ func (p *Player) ResolveMsg(msgB []byte) error {
 		go p.Ready()
 	case msg.MSG_TYPE_OF_PLAY_CARD:
 		cardIndex := gjson.Get(string(msgB), "Data.CardIndex").Array()
-		cards := []int{}
+		var cards []int
 		for _, card := range cardIndex {
 			cards = append(cards, int(card.Int()))
 		}

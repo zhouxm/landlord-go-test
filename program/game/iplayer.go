@@ -26,7 +26,7 @@ type IPlayer interface {
 	CreateGame(gameID int, baseScore int) //创建游戏
 	LeaveGame()                           //离开游戏
 	SayToOthers(msg []byte)               //给同一游戏的其他玩家发消息
-	SayToAnother(id int, msg []byte)      //给同意游戏的特定索引玩家发消息
+	SayToAnother(id int, msg []byte)      //给同一游戏的特定索引玩家发消息
 	ResolveMsg(msgB []byte) error         //处理客户端消息
 	Ready()                               //玩家准备
 	UnReady()                             //玩家取消准备

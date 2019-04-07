@@ -1,4 +1,4 @@
-package doudizhu
+package games
 
 import (
 	"encoding/json"
@@ -16,7 +16,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type Doudizhu struct {
+type Landlord struct {
 	id   int    //游戏ID
 	name string //游戏名称
 
@@ -46,11 +46,11 @@ type Doudizhu struct {
 	bottomCards          poker.PokerSet        //底牌
 }
 
-var originDoudizhu Doudizhu
+var originDoudizhu Landlord
 
 func init() {
 	//其他索引型属性不能在此赋值
-	originDoudizhu = Doudizhu{
+	originDoudizhu = Landlord{
 		name:            game.GetGameName(game.TypeOfDoudozhu),
 		playerNum:       3,
 		deckNum:         1,
@@ -64,7 +64,7 @@ func init() {
 	}
 }
 
-func GetDoudizhu(baseScore int) game.IGame {
+func GetLandlord(baseScore int) game.IGame {
 
 	newDou := originDoudizhu
 
@@ -90,12 +90,12 @@ func GetDoudizhu(baseScore int) game.IGame {
 	return &newDou
 }
 
-func (dou *Doudizhu) GetLastCard() *game.LastCardsType {
+func (dou *Landlord) GetLastCard() *game.LastCardsType {
 	return dou.lastCards
 }
 
 //增加玩家
-func (dou *Doudizhu) AddPlayer(currPlayer game.IPlayer) error {
+func (dou *Landlord) AddPlayer(currPlayer game.IPlayer) error {
 	dou.Lock()
 	if dou.IsPlaying {
 		dou.Unlock()
@@ -138,7 +138,7 @@ func (dou *Doudizhu) AddPlayer(currPlayer game.IPlayer) error {
 }
 
 //移除玩家
-func (dou *Doudizhu) RemovePlayer(player game.IPlayer) error {
+func (dou *Landlord) RemovePlayer(player game.IPlayer) error {
 	dou.Lock()
 	if dou.IsPlaying {
 		return errors.New("游戏进行中，无法移除玩家")
@@ -153,7 +153,7 @@ func (dou *Doudizhu) RemovePlayer(player game.IPlayer) error {
 }
 
 //玩家准备
-func (dou *Doudizhu) PlayerReady(p game.IPlayer) {
+func (dou *Landlord) PlayerReady(p game.IPlayer) {
 
 	dou.BroadCastMsg(p, msg.MSG_TYPE_OF_READY, "玩家已准备")
 
@@ -185,12 +185,12 @@ func (dou *Doudizhu) PlayerReady(p game.IPlayer) {
 }
 
 //玩家取消准备
-func (dou *Doudizhu) PlayerUnReady(p game.IPlayer) {
+func (dou *Landlord) PlayerUnReady(p game.IPlayer) {
 	dou.BroadCastMsg(p, msg.MSG_TYPE_OF_UN_READY, "玩家取消准备")
 }
 
 //发牌
-func (dou *Doudizhu) dealCards() {
+func (dou *Landlord) dealCards() {
 	//发牌前先初始化游戏相关变量
 	dou.initGame()
 	//洗牌
@@ -221,7 +221,7 @@ func (dou *Doudizhu) dealCards() {
 }
 
 //叫地主
-func (dou *Doudizhu) nextCallLoard() {
+func (dou *Landlord) nextCallLoard() {
 
 	var currPlayer game.IPlayer
 	dou.Lock()
@@ -238,7 +238,7 @@ func (dou *Doudizhu) nextCallLoard() {
 	currPlayer.StartCallScore()
 }
 
-func (dou *Doudizhu) PlayerCallScore(currPlayer game.IPlayer, score int) {
+func (dou *Landlord) PlayerCallScore(currPlayer game.IPlayer, score int) {
 	if score != 0 {
 		dou.BroadCastMsg(currPlayer, msg.MSG_TYPE_OF_CALL_SCORE, "用户抢地主")
 	} else {
@@ -277,7 +277,7 @@ func (dou *Doudizhu) PlayerCallScore(currPlayer game.IPlayer, score int) {
 		}
 	}
 }
-func (dou *Doudizhu) initGame() {
+func (dou *Landlord) initGame() {
 	dou.Lock()
 	for i, _ := range dou.playerCards {
 		dou.playerCards[i] = poker.PokerSet{}
@@ -288,10 +288,10 @@ func (dou *Doudizhu) initGame() {
 	dou.baseScore = 10
 	dou.Unlock()
 }
-func (dou *Doudizhu) restart() {
+func (dou *Landlord) restart() {
 	dou.dealCards()
 }
-func (dou *Doudizhu) callLoardEnd() {
+func (dou *Landlord) callLoardEnd() {
 	dou.Lock()
 	dou.CurrPlayerIndex = dou.lordIndex
 	dou.CalledLoardNum = 0
@@ -329,7 +329,7 @@ func (dou *Doudizhu) callLoardEnd() {
 	dou.play(dou.Players[dou.lordIndex])
 }
 
-func (dou *Doudizhu) play(currPlayer game.IPlayer) {
+func (dou *Landlord) play(currPlayer game.IPlayer) {
 	if currPlayer == nil {
 		currPlayer = dou.Players[dou.lordIndex]
 		currPlayer.StartPlay()
@@ -351,7 +351,7 @@ func (dou *Doudizhu) play(currPlayer game.IPlayer) {
 	}
 }
 
-func (dou *Doudizhu) PlayerPlayCards(p game.IPlayer, cardIndexs []int) {
+func (dou *Landlord) PlayerPlayCards(p game.IPlayer, cardIndexs []int) {
 	//符合出牌规则才允许出牌
 	if dou.getCurrPlayerIndex(p) != dou.CurrPlayerIndex {
 		p.PlayCardError("还没到您的出牌次序")
@@ -443,7 +443,7 @@ func (dou *Doudizhu) PlayerPlayCards(p game.IPlayer, cardIndexs []int) {
 }
 
 //最后出牌的玩家是否已经出完牌
-func (dou *Doudizhu) IsLastCardUserFinish() bool {
+func (dou *Landlord) IsLastCardUserFinish() bool {
 	dou.RLock()
 	defer dou.RUnlock()
 	isOutOfCards := false
@@ -455,7 +455,7 @@ func (dou *Doudizhu) IsLastCardUserFinish() bool {
 	return isOutOfCards
 }
 
-func (dou *Doudizhu) gameOver() {
+func (dou *Landlord) gameOver() {
 
 	dou.Lock()
 	dou.IsPlaying = false
@@ -475,7 +475,7 @@ func (dou *Doudizhu) gameOver() {
 	}
 }
 
-func (dou *Doudizhu) PlayerPassCard(currPlayer game.IPlayer) {
+func (dou *Landlord) PlayerPassCard(currPlayer game.IPlayer) {
 	//之前出牌是当前玩家则不能过牌，第一个出牌玩家也不能过牌
 	if dou.lastCards != nil && dou.getCurrPlayerIndex(currPlayer) != dou.lastCards.PlayerIndex {
 		currPlayer.PlayCardSuccess([]int{})
@@ -487,7 +487,7 @@ func (dou *Doudizhu) PlayerPassCard(currPlayer game.IPlayer) {
 	}
 }
 
-func (dou *Doudizhu) getNextPlayer() game.IPlayer {
+func (dou *Landlord) getNextPlayer() game.IPlayer {
 	dou.Lock()
 	defer dou.Unlock()
 	if dou.CurrPlayerIndex >= dou.playerNum-1 {
@@ -499,11 +499,11 @@ func (dou *Doudizhu) getNextPlayer() game.IPlayer {
 	return dou.Players[dou.CurrPlayerIndex]
 }
 
-func (dou *Doudizhu) getCurrPlayerIndex(currPlayer game.IPlayer) int {
+func (dou *Landlord) getCurrPlayerIndex(currPlayer game.IPlayer) int {
 	return currPlayer.GetIndex()
 }
 
-func (dou *Doudizhu) BroadCastMsg(player game.IPlayer, msgType int, hints string) {
+func (dou *Landlord) BroadCastMsg(player game.IPlayer, msgType int, hints string) {
 
 	newMsg := msg.NewBraodCastMsg()
 	newMsg.SubMsgType = msgType
@@ -587,27 +587,27 @@ func (dou *Doudizhu) BroadCastMsg(player game.IPlayer, msgType int, hints string
 		}
 	}
 }
-func (dou *Doudizhu) GetGameName() string {
+func (dou *Landlord) GetGameName() string {
 	return dou.name
 }
 
-func (dou *Doudizhu) GetGameID() int {
+func (dou *Landlord) GetGameID() int {
 	return dou.id
 }
 
-func (dou *Doudizhu) GetGameType() int {
+func (dou *Landlord) GetGameType() int {
 	return game.TypeOfDoudozhu
 }
 
 //初始化游戏中的牌
-func (dou *Doudizhu) initCards() {
+func (dou *Landlord) initCards() {
 	dou.Lock()
 	defer dou.Unlock()
 	dou.pokerCards = poker.CreateDeck().ToPokerSet()
 }
 
 //洗牌
-func (dou *Doudizhu) shuffleCards() {
+func (dou *Landlord) shuffleCards() {
 	dou.Lock()
 	defer dou.Unlock()
 
@@ -618,13 +618,13 @@ func (dou *Doudizhu) shuffleCards() {
 	}
 }
 
-func (dou *Doudizhu) HintCards(p game.IPlayer) []int {
+func (dou *Landlord) HintCards(p game.IPlayer) []int {
 	//todo
 	return []int{}
 }
 
 //检查出牌是否符合规则
-func (dou *Doudizhu) matchRoles(currPlayerIndex int, pokers poker.PokerSet, cardIndexs []int) (*game.LastCardsType, error) {
+func (dou *Landlord) matchRoles(currPlayerIndex int, pokers poker.PokerSet, cardIndexs []int) (*game.LastCardsType, error) {
 	setTypeInfo, err := dou.setChecker.GetSetInfo(pokers)
 	if err == nil {
 		return game.NewLastCards(currPlayerIndex, pokers, cardIndexs, setTypeInfo), nil
@@ -634,7 +634,7 @@ func (dou *Doudizhu) matchRoles(currPlayerIndex int, pokers poker.PokerSet, card
 }
 
 //对玩家手中扑克牌，按照从大到小排序
-func (dou *Doudizhu) sortPlayerCards() {
+func (dou *Landlord) sortPlayerCards() {
 	dou.Lock()
 	defer dou.Unlock()
 	for _, cards := range dou.playerCards {
@@ -642,15 +642,15 @@ func (dou *Doudizhu) sortPlayerCards() {
 	}
 }
 
-func (dou *Doudizhu) SayToOthers(p game.IPlayer, msg []byte) {
+func (dou *Landlord) SayToOthers(p game.IPlayer, msg []byte) {
 	//todo
 }
 
-func (dou *Doudizhu) SayToAnother(p game.IPlayer, otherIndex int, msg []byte) {
+func (dou *Landlord) SayToAnother(p game.IPlayer, otherIndex int, msg []byte) {
 	//todo
 }
 
-func (dou *Doudizhu) getOthersIndex(currIndex int) []int {
+func (dou *Landlord) getOthersIndex(currIndex int) []int {
 	if currIndex == 0 {
 		return []int{1, 2}
 	} else if currIndex == 1 {

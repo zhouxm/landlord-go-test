@@ -2,7 +2,6 @@ package games
 
 import (
 	"landlord/program/game"
-	"landlord/program/game/games/doudizhu"
 )
 
 /**
@@ -11,7 +10,7 @@ import (
 func NewGame(gameID int, baseScore int) game.IGame {
 	switch gameID {
 	case game.TypeOfDoudozhu:
-		return doudizhu.GetDoudizhu(baseScore)
+		return GetLandlord(baseScore)
 	case game.TypeOfShengji:
 		return nil
 	case game.TypeOfBaohuang:
