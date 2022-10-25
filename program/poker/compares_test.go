@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-var set PokerSet
+var set CardSet
 
 func init() {
 	set = CreateDeck().ToPokerSet()

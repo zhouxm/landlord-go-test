@@ -13,6 +13,7 @@ import (
 	"strconv"
 	"sync"
 
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/websocket"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -81,7 +82,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 func main() {
 	flag.Parse()
 
-	db, err := gorm.Open("mysql", "localhost:localhost@/demo?charset=utf8&parseTime=True&loc=Local")
+	db, err := gorm.Open("mysql", "root:admin@tcp(127.0.0.1:3306)/demo?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {
 		logrus.Fatal(err.Error())
 	}

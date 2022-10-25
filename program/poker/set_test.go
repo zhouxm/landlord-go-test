@@ -4,25 +4,25 @@ import (
 	"testing"
 )
 
-var oringSet PokerSet
+var oringSet CardSet
 
 func init() {
 	oringSet = CreateDeck().ToPokerSet()
 }
 
 func TestPokerSet_AddPokers(t *testing.T) {
-	set1 := PokerSet{}
+	set1 := CardSet{}
 	for i := range oringSet {
 		if set1.CountCards() != i {
 			t.Error("addPokers长度不匹配")
 		}
-		set1 = set1.AddPokers(PokerSet{oringSet[i]})
+		set1 = set1.AddPokers(CardSet{oringSet[i]})
 	}
 }
 
 func TestPokerSet_DelPokers(t *testing.T) {
-	set := PokerSet{oringSet[0], oringSet[1]}
-	set, err := set.DelPokers(PokerSet{oringSet[0]})
+	set := CardSet{oringSet[0], oringSet[1]}
+	set, err := set.DelPokers(CardSet{oringSet[0]})
 	if err != nil {
 		t.Error("TestPokerSet_DelPokers err")
 	} else {
@@ -33,7 +33,7 @@ func TestPokerSet_DelPokers(t *testing.T) {
 }
 
 func TestPokerSet_DelPokersByIndex(t *testing.T) {
-	set := PokerSet{oringSet[0], oringSet[1]}
+	set := CardSet{oringSet[0], oringSet[1]}
 	set, err := set.DelPokersByIndex([]int{0})
 	if err != nil {
 		t.Error("TestPokerSet_DelPokers err")
@@ -45,14 +45,14 @@ func TestPokerSet_DelPokersByIndex(t *testing.T) {
 }
 
 func TestPokerSet_GetLength(t *testing.T) {
-	set := PokerSet{oringSet[0], oringSet[1]}
+	set := CardSet{oringSet[0], oringSet[1]}
 	if len(set) != set.CountCards() {
 		t.Error("TestPokerSet_GetLength err")
 	}
 }
 
 func TestPokerSet_GetPokerByIndex(t *testing.T) {
-	set := PokerSet{oringSet[0], oringSet[1]}
+	set := CardSet{oringSet[0], oringSet[1]}
 	card, err := set.GetPokerByIndex(1)
 	if err != nil {
 		t.Error("TestPokerSet_DelPokers err")
@@ -64,7 +64,7 @@ func TestPokerSet_GetPokerByIndex(t *testing.T) {
 }
 
 func TestPokerSet_GetPokerIndex(t *testing.T) {
-	set := PokerSet{oringSet[0], oringSet[1]}
+	set := CardSet{oringSet[0], oringSet[1]}
 	index, err := set.GetPokerIndex(oringSet[1])
 	if err != nil {
 		t.Error("TestPokerSet_DelPokers err")
@@ -76,8 +76,8 @@ func TestPokerSet_GetPokerIndex(t *testing.T) {
 }
 
 func TestPokerSet_GetPokerIndexs(t *testing.T) {
-	set := PokerSet{oringSet[0], oringSet[1]}
-	indexs, err := set.GetPokerIndexs(PokerSet{oringSet[0], oringSet[1]})
+	set := CardSet{oringSet[0], oringSet[1]}
+	indexs, err := set.GetPokerIndexes(CardSet{oringSet[0], oringSet[1]})
 	if err != nil {
 		t.Error("TestPokerSet_DelPokers err")
 	} else {
@@ -88,7 +88,7 @@ func TestPokerSet_GetPokerIndexs(t *testing.T) {
 }
 
 func TestPokerSet_GetPokersByIndexs(t *testing.T) {
-	set := PokerSet{oringSet[0], oringSet[1]}
+	set := CardSet{oringSet[0], oringSet[1]}
 	cards, err := set.GetPokersByIndexs([]int{0, 1})
 	if err != nil {
 		t.Error("TestPokerSet_DelPokers err")
@@ -100,18 +100,18 @@ func TestPokerSet_GetPokersByIndexs(t *testing.T) {
 }
 
 func TestPokerSet_HasSamePoker(t *testing.T) {
-	set1 := PokerSet{oringSet[0], oringSet[1]}
-	if set1.HasSameValueCard(PokerSet{oringSet[4], oringSet[7]}) {
+	set1 := CardSet{oringSet[0], oringSet[1]}
+	if set1.HasSameValueCard(CardSet{oringSet[4], oringSet[7]}) {
 		t.Error("TestPokerSet_HasSamePoker err1")
 	}
 
-	if !set1.HasSameValueCard(PokerSet{oringSet[0], oringSet[1]}) {
+	if !set1.HasSameValueCard(CardSet{oringSet[0], oringSet[1]}) {
 		t.Error("TestPokerSet_HasSamePoker err1")
 	}
 }
 
 func TestPokerSet_ReplacePoker(t *testing.T) {
-	set := PokerSet{oringSet[36], oringSet[37]}
+	set := CardSet{oringSet[36], oringSet[37]}
 	err := set.ReplacePoker(0, oringSet[0])
 	if err != nil {
 		t.Error("1")
@@ -123,7 +123,7 @@ func TestPokerSet_ReplacePoker(t *testing.T) {
 }
 
 func TestCheckEachCardNum(t *testing.T) {
-	set1 := PokerSet{set[0], set[1], set[2], set[3],
+	set1 := CardSet{set[0], set[1], set[2], set[3],
 		set[4], set[5], set[6],
 		set[8], set[9],
 		set[12]}
@@ -140,46 +140,46 @@ func TestCheckEachCardNum(t *testing.T) {
 }
 
 func TestIsUnsameCardNumSame(t *testing.T) {
-	set1 := PokerSet{set[0], set[1], set[2], set[3],
+	set1 := CardSet{set[0], set[1], set[2], set[3],
 		set[4], set[5], set[6],
 		set[8], set[9],
 		set[12]}
 
-	if set1.IsUnsameCardNumSame() {
+	if set1.IsUnsafeCardNumSame() {
 		t.Error("TestIsUnsameCardNumSame err")
 	}
 
-	set2 := PokerSet{set[0], set[3],
+	set2 := CardSet{set[0], set[3],
 		set[4], set[5], set[6],
 		set[8], set[9],
 		set[12]}
 
-	if set2.IsUnsameCardNumSame() {
+	if set2.IsUnsafeCardNumSame() {
 		t.Error("TestIsUnsameCardNumSame err")
 	}
 
-	set3 := PokerSet{set[0], set[3],
+	set3 := CardSet{set[0], set[3],
 		set[4], set[6],
 		set[8], set[9],
 		set[12], set[13]}
 
-	if !set3.IsUnsameCardNumSame() {
+	if !set3.IsUnsafeCardNumSame() {
 		t.Error("TestIsUnsameCardNumSame err")
 	}
 
-	set4 := PokerSet{set[0],
+	set4 := CardSet{set[0],
 		set[4],
 		set[8],
 		set[12]}
 
-	if !set4.IsUnsameCardNumSame() {
+	if !set4.IsUnsafeCardNumSame() {
 		t.Error("TestIsUnsameCardNumSame err")
 	}
 
 }
 
 func TestIsCardSame(t *testing.T) {
-	set1 := PokerSet{set[0], set[1], set[2], set[3],
+	set1 := CardSet{set[0], set[1], set[2], set[3],
 		set[4], set[5], set[6],
 		set[8], set[9],
 		set[12]}

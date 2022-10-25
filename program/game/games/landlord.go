@@ -34,16 +34,16 @@ type Landlord struct {
 	FirstCallScoreIndex int   //第一个叫地主的人的index
 	OutCardIndexs       []int //出完牌的用户index
 
-	pokerCards poker.PokerSet      //当前游戏中的所有的牌
+	pokerCards poker.CardSet       //当前游戏中的所有的牌
 	lastCards  *game.LastCardsType //最后的出牌结构
 
-	Players              []game.IPlayer   //玩家数组
-	playerCards          []poker.PokerSet //同桌不同玩家的牌的切片
+	Players              []game.IPlayer  //玩家数组
+	playerCards          []poker.CardSet //同桌不同玩家的牌的切片
 	setChecker           pokergame.ISetChecker
 	playerPokerRecorders []pokergame.IRecorder //玩家的记牌器数组
 	playerPokerAnalyzer  []pokergame.IAnalyzer //玩家的牌型分析器
 	playerCardRecorder   []pokergame.IRecorder //每个玩家的记牌器，帮助玩家记录其他两家手里牌的合计情况
-	bottomCards          poker.PokerSet        //底牌
+	bottomCards          poker.CardSet         //底牌
 }
 
 var originDoudizhu Landlord
@@ -70,10 +70,10 @@ func GetLandlord(baseScore int) game.IGame {
 
 	newDou.Lock()
 	newDou.baseScore = baseScore
-	newDou.pokerCards = poker.PokerSet{}
+	newDou.pokerCards = poker.CardSet{}
 	newDou.Players = []game.IPlayer{}
-	newDou.playerCards = []poker.PokerSet{poker.PokerSet{}, poker.PokerSet{}, poker.PokerSet{}}
-	newDou.bottomCards = poker.PokerSet{}
+	newDou.playerCards = []poker.CardSet{poker.CardSet{}, poker.CardSet{}, poker.CardSet{}}
+	newDou.bottomCards = poker.CardSet{}
 	newDou.playerPokerRecorders = []pokergame.IRecorder{}
 	newDou.playerPokerAnalyzer = []pokergame.IAnalyzer{}
 	newDou.setChecker = pokergame.NewSetChecker(pokergame.GAME_OF_LANDLORD)
@@ -280,7 +280,7 @@ func (dou *Landlord) PlayerCallScore(currPlayer game.IPlayer, score int) {
 func (dou *Landlord) initGame() {
 	dou.Lock()
 	for i, _ := range dou.playerCards {
-		dou.playerCards[i] = poker.PokerSet{}
+		dou.playerCards[i] = poker.CardSet{}
 	}
 	dou.CalledLoardNum = 0
 	dou.lordIndex = -1
@@ -358,7 +358,7 @@ func (dou *Landlord) PlayerPlayCards(p game.IPlayer, cardIndexs []int) {
 		return
 	}
 
-	cards := poker.PokerSet{}
+	cards := poker.CardSet{}
 	for _, card := range p.GetPlayerCards(cardIndexs) {
 		//判断是否是之前出过的牌
 		cards = append(cards, card)
@@ -460,7 +460,7 @@ func (dou *Landlord) gameOver() {
 	dou.Lock()
 	dou.IsPlaying = false
 	for i, _ := range dou.playerCards {
-		dou.playerCards[i] = poker.PokerSet{}
+		dou.playerCards[i] = poker.CardSet{}
 	}
 	dou.Unlock()
 	//todo结算分数
@@ -624,7 +624,7 @@ func (dou *Landlord) HintCards(p game.IPlayer) []int {
 }
 
 //检查出牌是否符合规则
-func (dou *Landlord) matchRoles(currPlayerIndex int, pokers poker.PokerSet, cardIndexs []int) (*game.LastCardsType, error) {
+func (dou *Landlord) matchRoles(currPlayerIndex int, pokers poker.CardSet, cardIndexs []int) (*game.LastCardsType, error) {
 	setTypeInfo, err := dou.setChecker.GetSetInfo(pokers)
 	if err == nil {
 		return game.NewLastCards(currPlayerIndex, pokers, cardIndexs, setTypeInfo), nil

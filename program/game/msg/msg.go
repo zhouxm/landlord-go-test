@@ -35,7 +35,7 @@ const (
 
 type SendCard struct {
 	Index int //标志当前牌在用户所有牌中的索引位置
-	Card  poker.PokerCard
+	Card  poker.Card
 }
 
 //发送给客户端的消息类型
@@ -49,7 +49,7 @@ type Msg struct {
 	Msg     string
 }
 
-func NewSendCardMsg(cards poker.PokerSet) ([]byte, error) {
+func NewSendCardMsg(cards poker.CardSet) ([]byte, error) {
 	cardMsg := SendCardMsg{
 		MSG_TYPE_OF_SEND_CARD,
 		[]*SendCard{},
@@ -129,7 +129,7 @@ type BroadCastMsg struct {
 	MsgType          int
 	SubMsgType       int
 	Msg              string
-	Cards            poker.PokerSet
+	Cards            poker.CardSet
 	CardsIndex       []int
 	Score            int
 	PlayerId         int
@@ -142,7 +142,7 @@ func NewBraodCastMsg() BroadCastMsg {
 		MSG_TYPE_OF_TABLE_BRODCAST,
 		-1,
 		"",
-		poker.PokerSet{},
+		poker.CardSet{},
 		[]int{},
 		-1,
 		-1,

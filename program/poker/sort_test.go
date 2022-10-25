@@ -3,7 +3,7 @@ package poker
 import "testing"
 
 func TestBubbleSortCardsMax2Min(t *testing.T) {
-	currSet := PokerSet{set[0], set[10], set[5]}
+	currSet := CardSet{set[0], set[10], set[5]}
 	currSet.SortDesc()
 
 	if currSet[0].GetValue() != set[10].GetValue() ||
@@ -14,7 +14,7 @@ func TestBubbleSortCardsMax2Min(t *testing.T) {
 }
 
 func TestBubbleSortCardsMin2Max(t *testing.T) {
-	currSet := PokerSet{set[0], set[10], set[5]}
+	currSet := CardSet{set[0], set[10], set[5]}
 	currSet.SortAsc()
 
 	if currSet[0].GetValue() != set[0].GetValue() ||

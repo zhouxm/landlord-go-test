@@ -55,13 +55,13 @@ type IGame interface {
 }
 
 type LastCardsType struct {
-	PlayerCardIndexs []int          //扑克牌在出牌玩家所有牌中的index
-	PlayerIndex      int            //出牌的玩家index
-	Cards            poker.PokerSet //出的牌
+	PlayerCardIndexs []int         //扑克牌在出牌玩家所有牌中的index
+	PlayerIndex      int           //出牌的玩家index
+	Cards            poker.CardSet //出的牌
 	PokerSetTypeInfo *pokergame.SetInfo
 }
 
-func NewLastCards(playerIndex int, cards poker.PokerSet, cardIndexs []int, setTypeInfo *pokergame.SetInfo) *LastCardsType {
+func NewLastCards(playerIndex int, cards poker.CardSet, cardIndexs []int, setTypeInfo *pokergame.SetInfo) *LastCardsType {
 	lastCards := &LastCardsType{
 		PlayerIndex:      playerIndex,
 		Cards:            cards,

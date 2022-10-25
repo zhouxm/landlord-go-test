@@ -1,7 +1,7 @@
 package poker
 
-//使用冒泡排序法，对给定的扑克牌，使用给定的规则进项从小到大排序
-func BubbleSortCardsMax2Min(cards PokerSet, maxCard func(card1 *PokerCard, card2 *PokerCard) bool) {
+// BubbleSortCardsMax2Min 使用冒泡排序法，对给定的扑克牌，使用给定的规则进项从小到大排序
+func BubbleSortCardsMax2Min(cards CardSet, maxCard func(card1 *Card, card2 *Card) bool) {
 	length := cards.CountCards()
 	for i := 0; i < length; i++ {
 		for j := i; j < length; j++ {
@@ -12,8 +12,8 @@ func BubbleSortCardsMax2Min(cards PokerSet, maxCard func(card1 *PokerCard, card2
 	}
 }
 
-//使用冒泡排序法，对给定的扑克牌，使用给定的规则进项从小到大排序
-func BubbleSortCardsMin2Max(cards PokerSet, maxCard func(card1 *PokerCard, card2 *PokerCard) bool) {
+// BubbleSortCardsMin2Max 使用冒泡排序法，对给定的扑克牌，使用给定的规则进项从小到大排序
+func BubbleSortCardsMin2Max(cards CardSet, maxCard func(card1 *Card, card2 *Card) bool) {
 	length := cards.CountCards()
 	for i := 0; i < length; i++ {
 		for j := i; j < length; j++ {

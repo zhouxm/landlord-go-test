@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-var dec poker.PokerDeck
+var dec poker.Deck
 
 func init() {
 	dec = poker.CreateDeck()
@@ -87,8 +87,8 @@ func checkBoolWithType(t *testing.T, c []Check, funcName string) {
 
 //根据传入的字符数组，生成相应的扑克集，便于写测试用例
 //此处不区分花色
-func getPokerset(setString []string) poker.PokerSet {
-	set := poker.PokerSet{}
+func getPokerset(setString []string) poker.CardSet {
+	set := poker.CardSet{}
 	for _, name := range setString {
 		for i, card := range dec.GetAllCards() {
 			if card.GetCardName() == name {

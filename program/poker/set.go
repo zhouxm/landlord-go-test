@@ -4,18 +4,20 @@ import (
 	"errors"
 )
 
-/**
-定义扑克集合
-*/
-type PokerSet []*PokerCard
+// CardSet
+// 定义扑克集合
+//
+type CardSet []*Card
 
-//创建新的扑克集
-func NewPokerSet() PokerSet {
-	return PokerSet{}
+// NewPokerSet
+// 创建新的扑克集
+func NewPokerSet() CardSet {
+	return CardSet{}
 }
 
-//向扑克集中添加扑克
-func (set PokerSet) AddPokers(cards PokerSet) PokerSet {
+// AddPokers
+// 向扑克集中添加扑克
+func (set CardSet) AddPokers(cards CardSet) CardSet {
 	for _, card := range cards {
 		set = append(set, card)
 	}
@@ -24,9 +26,9 @@ func (set PokerSet) AddPokers(cards PokerSet) PokerSet {
 }
 
 //检查给定的索引是否存在
-func (set PokerSet) checkIndex(indexs []int) error {
+func (set CardSet) checkIndex(indexes []int) error {
 	setLen := set.CountCards()
-	for _, index := range indexs {
+	for _, index := range indexes {
 		if index >= setLen {
 			return errors.New("给定的索引超过扑克集的长度")
 		}
@@ -34,15 +36,16 @@ func (set PokerSet) checkIndex(indexs []int) error {
 	return nil
 }
 
-//从扑克集中删除制定索引的扑克,删除后扑克集元素变少
-func (set PokerSet) DelPokersByIndex(indexs []int) (PokerSet, error) {
+// DelPokersByIndex
+// 从扑克集中删除制定索引的扑克,删除后扑克集元素变少
+func (set CardSet) DelPokersByIndex(indexes []int) (CardSet, error) {
 
-	err := set.checkIndex(indexs)
+	err := set.checkIndex(indexes)
 	if err != nil {
 		return nil, err
 	}
 
-	for _, index := range indexs {
+	for _, index := range indexes {
 		set[index] = nil
 	}
 	newSet := NewPokerSet()
@@ -55,18 +58,20 @@ func (set PokerSet) DelPokersByIndex(indexs []int) (PokerSet, error) {
 	return newSet, nil
 }
 
-//从扑克集中删除指定的子集
-func (set PokerSet) DelPokers(pokers PokerSet) (PokerSet, error) {
-	indexs, err := set.GetPokerIndexs(pokers)
+// DelPokers
+// 从扑克集中删除指定的子集
+func (set CardSet) DelPokers(pokers CardSet) (CardSet, error) {
+	indexes, err := set.GetPokerIndexes(pokers)
 	if err != nil {
 		return nil, err
 	}
-	newSet, err := set.DelPokersByIndex(indexs)
+	newSet, err := set.DelPokersByIndex(indexes)
 	return newSet, nil
 }
 
-//根据给定索引，从扑克集中获取指定扑克
-func (set PokerSet) GetPokerByIndex(index int) (*PokerCard, error) {
+// GetPokerByIndex
+// 根据给定索引，从扑克集中获取指定扑克
+func (set CardSet) GetPokerByIndex(index int) (*Card, error) {
 	err := set.checkIndex([]int{index})
 	if err != nil {
 		return nil, err
@@ -74,8 +79,9 @@ func (set PokerSet) GetPokerByIndex(index int) (*PokerCard, error) {
 	return set[index], nil
 }
 
+// GetPokersByIndexs
 //根据给定索引，从扑克集中获取子扑克集
-func (set PokerSet) GetPokersByIndexs(indexs []int) (PokerSet, error) {
+func (set CardSet) GetPokersByIndexs(indexs []int) (CardSet, error) {
 
 	err := set.checkIndex(indexs)
 	if err != nil {
@@ -90,8 +96,8 @@ func (set PokerSet) GetPokersByIndexs(indexs []int) (PokerSet, error) {
 	return newSet, nil
 }
 
-//将指定索引的扑克牌替换
-func (set PokerSet) ReplacePoker(index int, card *PokerCard) error {
+// ReplacePoker 将指定索引的扑克牌替换
+func (set CardSet) ReplacePoker(index int, card *Card) error {
 	err := set.checkIndex([]int{index})
 	if err != nil {
 		return err
@@ -100,15 +106,15 @@ func (set PokerSet) ReplacePoker(index int, card *PokerCard) error {
 	return nil
 }
 
-//将扑克集中的各个扑克牌用于某个任务
-func (set PokerSet) DoOnEachPokerCard(do func(index int, card *PokerCard)) {
+// DoOnEachPokerCard 将扑克集中的各个扑克牌用于某个任务
+func (set CardSet) DoOnEachPokerCard(do func(index int, card *Card)) {
 	for i, card := range set {
 		do(i, card)
 	}
 }
 
-//获取指定扑克牌在扑克集中的index
-func (set PokerSet) GetPokerIndex(card *PokerCard) (int, error) {
+// GetPokerIndex 获取指定扑克牌在扑克集中的index
+func (set CardSet) GetPokerIndex(card *Card) (int, error) {
 	for i, c := range set {
 		if c == card {
 			return i, nil
@@ -117,36 +123,36 @@ func (set PokerSet) GetPokerIndex(card *PokerCard) (int, error) {
 	return -1, errors.New("查找的扑克牌不在该扑克集中")
 }
 
-//获取指定扑克集中各扑克牌在扑克集中的index
-func (set PokerSet) GetPokerIndexs(pokers PokerSet) ([]int, error) {
-	indexs := []int{}
+// GetPokerIndexes 获取指定扑克集中各扑克牌在扑克集中的index
+func (set CardSet) GetPokerIndexes(pokers CardSet) ([]int, error) {
+	var indexes []int
 	for _, card := range pokers {
 		index, err := set.GetPokerIndex(card)
 		if err != nil {
 			return nil, err
 		}
-		indexs = append(indexs, index)
+		indexes = append(indexes, index)
 	}
-	return indexs, nil
+	return indexes, nil
 }
 
-//计数扑克集中牌的数量
-func (set PokerSet) CountCards() int {
+// CountCards 计数扑克集中牌的数量
+func (set CardSet) CountCards() int {
 	return len(set)
 }
 
-//对扑克集中的牌，根据value大小从小到大排序
-func (set PokerSet) SortAsc() {
+// SortAsc 对扑克集中的牌，根据value大小从小到大排序
+func (set CardSet) SortAsc() {
 	BubbleSortCardsMin2Max(set, IsFirstCardValueBigger)
 }
 
-//对扑克集中的牌，根据value大小从大到小排序
-func (set PokerSet) SortDesc() {
+// SortDesc 对扑克集中的牌，根据value大小从大到小排序
+func (set CardSet) SortDesc() {
 	BubbleSortCardsMax2Min(set, IsFirstCardValueBigger)
 }
 
-//检测是否有相同值的扑克牌
-func (set PokerSet) HasSameValueCard(s PokerSet) bool {
+// HasSameValueCard 检测是否有相同值的扑克牌
+func (set CardSet) HasSameValueCard(s CardSet) bool {
 	for _, card1 := range set {
 		for _, card2 := range s {
 			if card1.CardValue == card2.CardValue {
@@ -157,8 +163,8 @@ func (set PokerSet) HasSameValueCard(s PokerSet) bool {
 	return false
 }
 
-//分析一组牌中，各值牌的数量,返回map[CardValue]num
-func (set PokerSet) AnalyzeEachCardValueNum() map[int]int {
+// AnalyzeEachCardValueNum 分析一组牌中，各值牌的数量,返回map[CardValue]num
+func (set CardSet) AnalyzeEachCardValueNum() map[int]int {
 	cardMap := make(map[int]int)
 
 	if len(set) == 0 {
@@ -177,8 +183,8 @@ func (set PokerSet) AnalyzeEachCardValueNum() map[int]int {
 	return cardMap
 }
 
-//分析一组牌中，各花色牌的数量,返回map[CardSuit]num
-func (set PokerSet) AnalyzeEachCardSuitNum() map[string]int {
+// AnalyzeEachCardSuitNum 分析一组牌中，各花色牌的数量,返回map[CardSuit]num
+func (set CardSet) AnalyzeEachCardSuitNum() map[string]int {
 	cardMap := make(map[string]int)
 
 	if len(set) == 0 {
@@ -197,8 +203,8 @@ func (set PokerSet) AnalyzeEachCardSuitNum() map[string]int {
 	return cardMap
 }
 
-//判断一组牌中，不同数字的数量是否相同
-func (set PokerSet) IsUnsameCardNumSame() bool {
+// IsUnsafeCardNumSame 判断一组牌中，不同数字的数量是否相同
+func (set CardSet) IsUnsafeCardNumSame() bool {
 	numMap := make(map[int]int)
 	for _, v := range set {
 		_, ok := numMap[v.GetValue()]
@@ -223,10 +229,10 @@ func (set PokerSet) IsUnsameCardNumSame() bool {
 	return true
 }
 
-//判断一组牌中，给定索引的牌是否一样大小
-func (set PokerSet) IsAllCardSame(cardIndexs []int) bool {
+// IsAllCardSame 判断一组牌中，给定索引的牌是否一样大小
+func (set CardSet) IsAllCardSame(cardIndexes []int) bool {
 	temp := -1
-	for i, v := range cardIndexs {
+	for i, v := range cardIndexes {
 		if i == 0 {
 			temp = set[v].GetValue()
 		} else {

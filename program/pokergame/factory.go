@@ -14,21 +14,21 @@ const (
 
 type IRecorder interface {
 	InitRecorder()
-	AddPokerSet(playerPokers ...poker.PokerSet)
-	RemovePokerSet(cards poker.PokerSet)
+	AddPokerSet(playerPokers ...poker.CardSet)
+	RemovePokerSet(cards poker.CardSet)
 	SequenceJsonEncode() string
 }
 
 type IAnalyzer interface {
 	InitAnalyzer()
-	AddPokerSet(pokers poker.PokerSet)
-	RemovePokerSet(pokers poker.PokerSet)
-	GetMinPlayableCards() poker.PokerSet
-	GetUseableCards(setType *SetInfo) []poker.PokerSet
+	AddPokerSet(pokers poker.CardSet)
+	RemovePokerSet(pokers poker.CardSet)
+	GetMinPlayableCards() poker.CardSet
+	GetUseableCards(setType *SetInfo) []poker.CardSet
 }
 
 type ISetChecker interface {
-	GetSetInfo(set poker.PokerSet) (*SetInfo, error)
+	GetSetInfo(set poker.CardSet) (*SetInfo, error)
 }
 
 //获取适用于某一种游戏的扑克集

@@ -1,44 +1,49 @@
 package poker
 
+// Deck
 //定义一副扑克牌
-type PokerDeck struct {
-	cards [54]PokerCard
+type Deck struct {
+	cards [54]Card
 }
 
-//获取指定索引的扑克牌
-func (deck PokerDeck) GetCard(index int) *PokerCard {
+// GetCard
+// 获取指定索引的扑克牌
+func (deck Deck) GetCard(index int) *Card {
 	return &deck.cards[index]
 }
 
-//计算扑克牌的数量
-func (deck PokerDeck) CountCards() int {
+// CountCards
+// 计算扑克牌的数量
+func (deck Deck) CountCards() int {
 	return len(deck.cards)
 }
 
-//获取该deck中的所有牌
-func (deck PokerDeck) GetAllCards() []PokerCard {
+// GetAllCards
+// 获取该deck中的所有牌
+func (deck Deck) GetAllCards() []Card {
 	return deck.cards[:]
 }
 
-//将pokerdeck转换为pokerset
-func (deck PokerDeck) ToPokerSet() PokerSet {
+// ToPokerSet
+// 将deck转换为set
+func (deck Deck) ToPokerSet() CardSet {
 	set := NewPokerSet()
 	for i, _ := range deck.cards {
-		set = set.AddPokers(PokerSet{&deck.cards[i]})
+		set = set.AddPokers(CardSet{&deck.cards[i]})
 	}
 	return set
 }
 
 //原始的一副扑克牌
-var originDeck PokerDeck
+var originDeck Deck
 
 func init() {
 	originDeck = createOriginDeck()
 }
 
 //创建原始扑克牌，后续只需要复制即可，不用再运算获得
-func createOriginDeck() PokerDeck {
-	deck := PokerDeck{}
+func createOriginDeck() Deck {
+	deck := Deck{}
 	for i := 0; i < 52; i++ {
 		shang := i / 4
 		yu := i % 4
@@ -96,19 +101,19 @@ func createOriginDeck() PokerDeck {
 			pokerValue = CARD_VALUE_TWO
 			pokerName = CARD_SYMBOL_TWO
 		}
-		deck.cards[i] = PokerCard{
+		deck.cards[i] = Card{
 			pokerValue,
 			suit,
 			pokerName,
 		}
 	}
-	deck.cards[52] = PokerCard{
+	deck.cards[52] = Card{
 		CARD_VALUE_BLACK_JOKER,
 		CARD_SUIT_JOKER,
 		CARD_SYMBOL_BLACK_JOKER,
 	}
 
-	deck.cards[53] = PokerCard{
+	deck.cards[53] = Card{
 		CARD_VALUE_RED_JOKER,
 		CARD_SUIT_JOKER,
 		CARD_SYMBOL_RED_JOKER,
@@ -117,13 +122,13 @@ func createOriginDeck() PokerDeck {
 }
 
 //每个游戏桌子都有单独的扑克牌，防止洗牌等操作冲突
-func CreateDeck() PokerDeck {
+func CreateDeck() Deck {
 	copyDeck := originDeck
 	return copyDeck
 }
 
 //根据输入的扑克副数，生成扑克集
-func CreatePokerSetWithDeckNum(deckNum int) PokerSet {
+func CreatePokerSetWithDeckNum(deckNum int) CardSet {
 	set := NewPokerSet()
 	for i := 0; i < deckNum; i++ {
 		set = set.AddPokers(CreateDeck().ToPokerSet())

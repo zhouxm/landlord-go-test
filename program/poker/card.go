@@ -50,24 +50,28 @@ const (
 	CARD_SUIT_JOKER   = "Joker"   //大小王无花色
 )
 
+// Card
 //定义扑克牌
-type PokerCard struct {
+type Card struct {
 	CardValue int    //card值用于排序比较
 	CardSuit  string //card花色
 	CardName  string //card显示的字符
 }
 
+// GetValue
 //获取扑克牌的值
-func (card PokerCard) GetValue() int {
+func (card Card) GetValue() int {
 	return card.CardValue
 }
 
+// GetSuit
 //获取扑克牌的花色
-func (card PokerCard) GetSuit() string {
+func (card Card) GetSuit() string {
 	return card.CardSuit
 }
 
+// GetCardName
 //获取扑克牌的名字
-func (card PokerCard) GetCardName() string {
+func (card Card) GetCardName() string {
 	return card.CardName
 }

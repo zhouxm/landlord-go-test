@@ -15,7 +15,7 @@ func SendPlayerCards(curPlayer *Player) {
 	curPlayer.SendMsg(json)
 }
 
-func SendMsgToPlayer(p *Player, msgType int, hints string) {
+func SendMsgToPlayer(player *Player, msgType int, hints string) {
 
 	var newMsg []byte
 	var err error
@@ -31,13 +31,13 @@ func SendMsgToPlayer(p *Player, msgType int, hints string) {
 	case msg.MSG_TYPE_OF_PLAY_CARD_SUCCESS:
 		newMsg, err = msg.NewPlayCardSuccessMsg()
 	case msg.MSG_TYPE_OF_LOGIN:
-		newMsg, err = msg.NewLoginMsg(p.User.Id, "登陆成功")
+		newMsg, err = msg.NewLoginMsg(player.User.Id, "登陆成功")
 	default:
 		return
 	}
 
 	if err == nil {
-		p.SendMsg(newMsg)
+		player.SendMsg(newMsg)
 	} else {
 		log.Fatal(err.Error())
 	}

@@ -24,7 +24,7 @@ type Player struct {
 	User *model.User
 	Conn *connection.WebSocketConnection //用户socket链接
 	sync.RWMutex
-	PokerCards poker.PokerSet //玩家手里的扑克牌0
+	PokerCards poker.CardSet //玩家手里的扑克牌0
 
 	Index            int        //在桌子上的索引
 	IsReady          bool       //是否准备
@@ -40,7 +40,7 @@ type Player struct {
 	PokerRecorder pokergame.IRecorder
 	PokerAnalyzer pokergame.IAnalyzer
 
-	UseablePokerSets []poker.PokerSet
+	UseablePokerSets []poker.CardSet
 	CurrHintSetIndex int
 }
 
@@ -82,9 +82,9 @@ func (p *Player) GetPlayedCardIndexs() []int {
 	return p.PlayedCardIndexs
 }
 
-func (p *Player) GetPlayerCards(indexs []int) poker.PokerSet {
+func (p *Player) GetPlayerCards(indexs []int) poker.CardSet {
 	if indexs != nil && len(indexs) > 0 {
-		temCards := poker.PokerSet{}
+		temCards := poker.CardSet{}
 		for _, i := range indexs {
 			temCards = append(temCards, p.PokerCards[i])
 		}
@@ -94,7 +94,7 @@ func (p *Player) GetPlayerCards(indexs []int) poker.PokerSet {
 	}
 }
 
-func (p *Player) SetPokerCards(cards poker.PokerSet) {
+func (p *Player) SetPokerCards(cards poker.CardSet) {
 
 	p.Lock()
 	p.PokerCards = cards
@@ -165,7 +165,7 @@ func (p *Player) StartPlay() {
 			lastCards := currGame.GetLastCard()
 			//如果上家没有出牌或者上次是当前玩家出牌，提示可用最小牌即可,否则根据上轮出牌给出可用的扑克牌
 			if lastCards == nil || lastCards.PlayerIndex == p.Index || currGame.IsLastCardUserFinish() {
-				p.UseablePokerSets = []poker.PokerSet{p.PokerAnalyzer.GetMinPlayableCards()}
+				p.UseablePokerSets = []poker.CardSet{p.PokerAnalyzer.GetMinPlayableCards()}
 			} else {
 				p.UseablePokerSets = p.PokerAnalyzer.GetUseableCards(lastCards.PokerSetTypeInfo)
 			}
@@ -217,7 +217,7 @@ func (p *Player) StartPlay() {
 
 func (p *Player) autoPlay(currGame game.IGame) {
 	if len(p.UseablePokerSets) > 0 {
-		indexs, err := p.PokerCards.GetPokerIndexs(p.UseablePokerSets[0])
+		indexs, err := p.PokerCards.GetPokerIndexes(p.UseablePokerSets[0])
 		if err == nil {
 			p.playCardsChan <- indexs
 		} else {

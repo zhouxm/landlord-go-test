@@ -1,6 +1,6 @@
 package pokergame
 
-//冒泡排序法对整数排序
+// BubbleSortIntMin2Max 冒泡排序法对整数排序
 func BubbleSortIntMin2Max(ints []int) {
 	length := len(ints)
 	for i := 0; i < length; i++ {

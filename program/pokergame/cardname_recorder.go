@@ -33,11 +33,11 @@ func (re *cardNameRecorder) InitRecorder() {
 }
 
 //增加记录器
-func (re *cardNameRecorder) AddPokerSet(playerPokers ...poker.PokerSet) {
+func (re *cardNameRecorder) AddPokerSet(playerPokers ...poker.CardSet) {
 	re.Lock()
 	defer re.Unlock()
 	for _, pokerSet := range playerPokers {
-		pokerSet.DoOnEachPokerCard(func(index int, card *poker.PokerCard) {
+		pokerSet.DoOnEachPokerCard(func(index int, card *poker.Card) {
 			re.dic[card.GetCardName()]++
 		})
 	}
@@ -45,10 +45,10 @@ func (re *cardNameRecorder) AddPokerSet(playerPokers ...poker.PokerSet) {
 }
 
 //更新玩家记牌器,玩家出牌后调用
-func (re *cardNameRecorder) RemovePokerSet(cards poker.PokerSet) {
+func (re *cardNameRecorder) RemovePokerSet(cards poker.CardSet) {
 	re.Lock()
 	defer re.Unlock()
-	cards.DoOnEachPokerCard(func(index int, card *poker.PokerCard) {
+	cards.DoOnEachPokerCard(func(index int, card *poker.Card) {
 		re.dic[card.GetCardName()]--
 	})
 }
