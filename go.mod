@@ -8,8 +8,6 @@ require (
 	github.com/jinzhu/gorm v1.9.1
 	github.com/sirupsen/logrus v1.9.0
 	github.com/tidwall/gjson v1.1.3
-	github.com/wqtapp/poker v0.0.0-20181202144945-fca6e2271d47
-	github.com/wqtapp/pokergame v0.0.0-20181202150306-554a0f642227
 )
 
 require (
