@@ -79,7 +79,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 func main() {
 	flag.Parse()
 
-	db, err := gorm.Open("mysql", "root:password@tcp(127.0.0.1:3306)/demo?charset=utf8&parseTime=True&loc=Local")
+	db, err := gorm.Open("mysql", "root:password@tcp(127.0.0.1:3306)/games?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {
 		logrus.Fatal(err.Error())
 	}
