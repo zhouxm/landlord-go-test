@@ -2,7 +2,7 @@ package game
 
 import (
 	"errors"
-	"github.com/sirupsen/logrus"
+	"github.com/google/logger"
 	"strconv"
 	"sync"
 )
@@ -38,7 +38,7 @@ func (r Room) AddGame(gameType int, game IGame) int {
 
 	list.Lock()
 	gameCount := len(list.list)
-	logrus.Info("新游戏加入房间:" + GetGameName(gameType) + strconv.Itoa(gameType) + strconv.Itoa(gameCount))
+	logger.Info("新游戏加入房间:" + GetGameName(gameType) + strconv.Itoa(gameType) + strconv.Itoa(gameCount))
 	list.list[gameCount] = game
 	list.Unlock()
 
@@ -53,11 +53,11 @@ func (r Room) GetGame(gameType int, gameID int) (IGame, error) {
 		if ok {
 			return game, nil
 		} else {
-			logrus.Error("不存在该游戏")
+			logger.Error("不存在该游戏")
 			return nil, errors.New("不存在该游戏")
 		}
 	} else {
-		logrus.Error("不存在该类型的游戏")
+		logger.Error("不存在该类型的游戏")
 		return nil, errors.New("不存在该类型的游戏")
 	}
 }

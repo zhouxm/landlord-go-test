@@ -2,8 +2,8 @@ package player
 
 import (
 	"fmt"
+	"github.com/google/logger"
 	"github.com/gorilla/websocket"
-	"github.com/sirupsen/logrus"
 	"runtime/debug"
 	"strconv"
 	"sync"
@@ -25,7 +25,7 @@ func HandlerUserMsg(wg *sync.WaitGroup, con *websocket.Conn, currPlayer *Player)
 				//同桌用户交流，包含对话流程和出牌流程
 				currPlayer.ResolveMsg(msg)
 			case websocket.CloseMessage:
-				logrus.Info("玩家：" + strconv.Itoa(currPlayer.GetPlayerUser().Id) + "断开链接")
+				logger.Info("玩家：" + strconv.Itoa(currPlayer.GetPlayerUser().Id) + "断开链接")
 				break
 				//离开桌子流程，后续包含断线保持，自动出牌
 			default:

@@ -13,7 +13,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sirupsen/logrus"
+	"github.com/google/logger"
 	"github.com/tidwall/gjson"
 )
 
@@ -99,7 +99,7 @@ func (p *Player) SetPokerCards(cards poker.CardSet) {
 	p.Lock()
 	p.PokerCards = cards
 	p.Unlock()
-	logrus.Debug("发牌给玩家"+strconv.Itoa(p.GetPlayerUser().Id), cards)
+	logger.Info("发牌给玩家"+strconv.Itoa(p.GetPlayerUser().Id), cards)
 	msg, err := msg.NewSendCardMsg(cards)
 	if err == nil {
 		p.SendMsg(msg)

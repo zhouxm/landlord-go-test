@@ -13,7 +13,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/sirupsen/logrus"
+	"github.com/google/logger"
 )
 
 type Landlord struct {
@@ -103,7 +103,7 @@ func (dou *Landlord) AddPlayer(currPlayer game.IPlayer) error {
 	}
 	if len(dou.Players) > dou.playerNum {
 		dou.Unlock()
-		logrus.Error("游戏玩家数超限," + game.GetGameName(dou.GetGameType()) + ":" + strconv.Itoa(dou.GetGameID()))
+		logger.Error("游戏玩家数超限," + game.GetGameName(dou.GetGameType()) + ":" + strconv.Itoa(dou.GetGameID()))
 		return errors.New("游戏数据出错")
 	}
 
@@ -111,7 +111,7 @@ func (dou *Landlord) AddPlayer(currPlayer game.IPlayer) error {
 		for i, p := range dou.Players {
 			if p == nil {
 				dou.Players[i] = currPlayer
-				logrus.Info("有新玩家加入游戏" + strconv.Itoa(dou.id))
+				logger.Info("有新玩家加入游戏" + strconv.Itoa(dou.id))
 				dou.Unlock()
 				currPlayer.SetIndex(i)
 				game.BindPlayerGame(currPlayer, dou)
@@ -366,9 +366,9 @@ func (dou *Landlord) PlayerPlayCards(p game.IPlayer, cardIndexs []int) {
 
 	lastCards, err := dou.matchRoles(dou.getCurrPlayerIndex(p), cards, cardIndexs)
 	if err == nil {
-		logrus.Debug("lastCards", lastCards)
+		logger.Info("lastCards", lastCards)
 		if dou.lastCards != nil {
-			logrus.Debug("dou.lastCards", dou.lastCards)
+			logger.Info("dou.lastCards", dou.lastCards)
 		}
 		//第一个出牌，或者上一次出牌没人管，或者出牌大于上家，此时满足出牌要求
 		if dou.lastCards == nil || //第一次出牌

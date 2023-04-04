@@ -1,7 +1,7 @@
 package game
 
 import (
-	"github.com/sirupsen/logrus"
+	"github.com/google/logger"
 	"landlord/program/poker"
 	"landlord/program/pokergame"
 )
@@ -28,7 +28,7 @@ func GetGameName(gameID int) string {
 	if ok {
 		return name
 	} else {
-		logrus.Error("未定义游戏名称")
+		logger.Error("未定义游戏名称")
 		return "未定义游戏名称"
 	}
 }
