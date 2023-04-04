@@ -9,8 +9,8 @@ type WebSocketConnection struct {
 	sync.RWMutex
 	Conn *websocket.Conn
 }
-
-func NewWebSocketConnection(conn *websocket.Conn) *WebSocketConnection{
+ 
+ func NewWebSocketConnection(conn *websocket.Conn) *WebSocketConnection{
 	return &WebSocketConnection{
 		Conn:conn,
 	}
